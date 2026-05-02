@@ -1,0 +1,1 @@
+Do not run the build script after every change because I will most likely be running the dev server and it will break both.
