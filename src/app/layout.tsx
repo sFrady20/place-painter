@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@/components/google-analytics";
 import "@/styles/main.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -33,7 +34,10 @@ export default function RootLayout({
         .map((x) => x.variable)
         .join(" ")}`}
     >
-      <body className={`antialiased`}>{children}</body>
+      <body className={`antialiased`}>
+        {children}
+        <GoogleAnalytics />
+      </body>
     </html>
   );
 }

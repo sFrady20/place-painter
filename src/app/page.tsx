@@ -6,7 +6,7 @@ import { Separator } from "earthling-ui/separator";
 import MapCanvas, { type MapCanvasHandle } from "@/components/map-canvas";
 import PaintToolbar from "@/components/paint-toolbar";
 import ExportButton from "@/components/export-button";
-import type { PaintColor } from "@/lib/paint-colors";
+import { PAINT_COLORS, PAINT_COLOR_KEYS, type PaintColor } from "@/lib/paint-colors";
 
 type Tool = "brush" | "fill" | "eraser";
 
@@ -40,8 +40,23 @@ export default function PlacePainterPage() {
         </div>
       </div>
 
-      {/* Bottom bar — toolbar + footer */}
+      {/* Bottom bar — legend + toolbar + footer */}
       <div className="flex flex-col items-center gap-2 pb-2">
+        {/* Legend */}
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+          {PAINT_COLOR_KEYS.map((key) => (
+            <div key={key} className="flex items-center gap-1.5">
+              <span
+                className="inline-block h-3 w-3 rounded-full"
+                style={{ backgroundColor: PAINT_COLORS[key].hex }}
+              />
+              <span className="text-muted-foreground text-xs">
+                {PAINT_COLORS[key].meaning}
+              </span>
+            </div>
+          ))}
+        </div>
+
         <Card className="px-2 py-2 sm:px-3" material="glass">
           <div className="flex flex-col items-center gap-2 sm:flex-row">
             <PaintToolbar

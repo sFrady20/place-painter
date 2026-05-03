@@ -92,28 +92,40 @@ async function renderImage(handle: MapCanvasHandle): Promise<Blob | null> {
   // Legend
   const legendY = height - 40;
   const colors = [
-    { label: "Absolutely", hex: "#22c55e" },
-    { label: "Willing", hex: "#86efac" },
-    { label: "Maybe", hex: "#a3a3a3" },
-    { label: "Reluctantly", hex: "#f97316" },
     { label: "Never", hex: "#ef4444" },
+    { label: "Reluctantly", hex: "#f97316" },
+    { label: "Maybe", hex: "#a3a3a3" },
+    { label: "Willing", hex: "#86efac" },
+    { label: "Absolutely", hex: "#22c55e" },
   ];
-  const legendSpacing = 150;
-  const legendWidth = colors.length * legendSpacing;
-  const startX = (width - legendWidth) / 2;
-
   ctx.font = "bold 22px system-ui, sans-serif";
+
+  // Measure each legend item (dot + gap + text) to compute total width
+  const dotRadius = 10;
+  const dotTextGap = 14;
+  const itemGap = 32;
+  const items = colors.map((c) => {
+    const textW = ctx.measureText(c.label).width;
+    return { ...c, width: dotRadius * 2 + dotTextGap + textW };
+  });
+  const totalWidth =
+    items.reduce((sum, item) => sum + item.width, 0) +
+    itemGap * (items.length - 1);
+  let curX = (width - totalWidth) / 2;
+
   ctx.textAlign = "left";
-  colors.forEach((c, i) => {
-    const x = startX + i * legendSpacing;
+  items.forEach((c) => {
+    // Dot
     ctx.fillStyle = c.hex;
     ctx.beginPath();
-    ctx.arc(x, legendY, 10, 0, Math.PI * 2);
+    ctx.arc(curX + dotRadius, legendY, dotRadius, 0, Math.PI * 2);
     ctx.fill();
+    // Label
     ctx.fillStyle = fgColor || "#000000";
     ctx.globalAlpha = 0.8;
-    ctx.fillText(c.label, x + 18, legendY + 7);
+    ctx.fillText(c.label, curX + dotRadius * 2 + dotTextGap, legendY + 7);
     ctx.globalAlpha = 1;
+    curX += c.width + itemGap;
   });
 
   // URL watermark
