@@ -67,6 +67,11 @@ const MapCanvas = forwardRef<MapCanvasHandle, MapCanvasProps>(
       if (clipPath.current) {
         ctx.save();
         ctx.clip(clipPath.current);
+
+        // Fill all states with neutral color
+        ctx.globalCompositeOperation = "source-over";
+        ctx.fillStyle = PAINT_COLORS.neutral.hex;
+        ctx.fill(clipPath.current);
       }
     }, []);
 
@@ -228,6 +233,10 @@ const MapCanvas = forwardRef<MapCanvasHandle, MapCanvasProps>(
         ctx.translate(-vbX, -vbY);
         if (clipPath.current) {
           ctx.clip(clipPath.current);
+          // Refill with neutral
+          ctx.globalCompositeOperation = "source-over";
+          ctx.fillStyle = PAINT_COLORS.neutral.hex;
+          ctx.fill(clipPath.current);
         }
       },
       getCanvasElement: () => canvasRef.current,
