@@ -59,6 +59,7 @@ export default function PaintToolbar({
           scheme="muted"
           shape="icon"
           size="sm"
+          className="aria-pressed:border-foreground border-2 border-transparent"
           onClick={() => onToolChange("fill")}
           aria-pressed={tool === "fill"}
           aria-label="Fill state"
@@ -70,6 +71,7 @@ export default function PaintToolbar({
           scheme="muted"
           shape="icon"
           size="sm"
+          className="aria-pressed:border-foreground border-2 border-transparent"
           onClick={() => onToolChange("brush")}
           aria-pressed={tool === "brush"}
           aria-label="Brush"
@@ -81,6 +83,7 @@ export default function PaintToolbar({
           scheme="muted"
           shape="icon"
           size="sm"
+          className="aria-pressed:border-foreground border-2 border-transparent"
           onClick={() => onToolChange("eraser")}
           aria-pressed={tool === "eraser"}
           aria-label="Eraser"

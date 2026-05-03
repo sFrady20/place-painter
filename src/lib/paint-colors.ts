@@ -9,7 +9,7 @@ export interface PaintColorConfig {
 export const PAINT_COLORS: Record<PaintColor, PaintColorConfig> = {
   red: { label: "Red", hex: "#ef4444", meaning: "Never" },
   orange: { label: "Orange", hex: "#f97316", meaning: "Reluctantly" },
-  neutral: { label: "Neutral", hex: "#a3a3a3", meaning: "Maybe" },
+  neutral: { label: "Neutral", hex: "#dddddd", meaning: "Maybe" },
   lightgreen: { label: "Light Green", hex: "#86efac", meaning: "Willing" },
   green: { label: "Green", hex: "#22c55e", meaning: "Absolutely" },
 };

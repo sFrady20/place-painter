@@ -189,7 +189,7 @@ export default function ExportButton({ mapRef }: ExportButtonProps) {
   }, [mapRef]);
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-6 sm:gap-2">
       {canShare && (
         <Button
           material="ghost"
@@ -200,6 +200,7 @@ export default function ExportButton({ mapRef }: ExportButtonProps) {
           aria-label="Share image"
         >
           <span className="icon-[lucide--share-2] text-base" />
+          <span className="sm:hidden">Share</span>
         </Button>
       )}
       <Button
@@ -211,6 +212,7 @@ export default function ExportButton({ mapRef }: ExportButtonProps) {
         aria-label="Download image"
       >
         <span className="icon-[lucide--download] text-base" />
+        <span className="sm:hidden">Download</span>
       </Button>
     </div>
   );

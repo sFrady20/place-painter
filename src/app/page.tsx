@@ -47,7 +47,7 @@ export default function PlacePainterPage() {
       {/* Bottom bar — legend + toolbar + footer */}
       <div className="flex flex-col items-center gap-2 pb-2">
         {/* Legend */}
-        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+        <div className="flex flex-col flex-wrap justify-center gap-x-4 gap-y-1 self-end sm:flex-row sm:self-center">
           {PAINT_COLOR_KEYS.map((key) => (
             <div key={key} className="flex items-center gap-1.5">
               <span
@@ -61,7 +61,7 @@ export default function PlacePainterPage() {
           ))}
         </div>
 
-        <Card className="px-2 py-2 sm:px-3" material="glass">
+        <Card className="w-full px-2 py-2 sm:w-auto sm:px-3" material="glass">
           <div className="flex flex-col items-center gap-2 sm:flex-row">
             <PaintToolbar
               color={color}
