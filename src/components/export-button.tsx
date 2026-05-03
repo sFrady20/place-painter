@@ -74,6 +74,7 @@ export default function ExportButton({ mapRef }: ExportButtonProps) {
     const svgClone = svg.cloneNode(true) as SVGSVGElement;
     svgClone.setAttribute("width", String(destW));
     svgClone.setAttribute("height", String(destH));
+    svgClone.setAttribute("preserveAspectRatio", "xMinYMin meet");
 
     // Resolve CSS vars for stroke colors
     const resolvedStroke = getComputedStyle(document.documentElement)
@@ -109,27 +110,29 @@ export default function ExportButton({ mapRef }: ExportButtonProps) {
     ctx.drawImage(canvas, destX, destY, destW, destH);
 
     // Color legend at bottom
-    const legendY = height - 28;
+    const legendY = height - 40;
     const colors = [
-      { label: "Yes", hex: "#22c55e" },
-      { label: "Maybe", hex: "#eab308" },
-      { label: "Maybe not", hex: "#f97316" },
-      { label: "No", hex: "#ef4444" },
+      { label: "Absolutely", hex: "#22c55e" },
+      { label: "Willing", hex: "#86efac" },
+      { label: "Maybe", hex: "#a3a3a3" },
+      { label: "Reluctantly", hex: "#f97316" },
+      { label: "Never", hex: "#ef4444" },
     ];
-    const legendWidth = colors.length * 100;
+    const legendSpacing = 150;
+    const legendWidth = colors.length * legendSpacing;
     const startX = (width - legendWidth) / 2;
 
-    ctx.font = "14px system-ui, sans-serif";
+    ctx.font = "bold 22px system-ui, sans-serif";
     ctx.textAlign = "left";
     colors.forEach((c, i) => {
-      const x = startX + i * 100;
+      const x = startX + i * legendSpacing;
       ctx.fillStyle = c.hex;
       ctx.beginPath();
-      ctx.arc(x, legendY, 6, 0, Math.PI * 2);
+      ctx.arc(x, legendY, 10, 0, Math.PI * 2);
       ctx.fill();
       ctx.fillStyle = fgColor || "#000000";
-      ctx.globalAlpha = 0.7;
-      ctx.fillText(c.label, x + 12, legendY + 5);
+      ctx.globalAlpha = 0.8;
+      ctx.fillText(c.label, x + 18, legendY + 7);
       ctx.globalAlpha = 1;
     });
 

@@ -244,6 +244,7 @@ const MapCanvas = forwardRef<MapCanvasHandle, MapCanvasProps>(
         <svg
           ref={svgRef}
           viewBox={MAP_VIEWBOX}
+          preserveAspectRatio="xMinYMin meet"
           className="absolute inset-0 h-full w-full"
           aria-hidden="true"
         >

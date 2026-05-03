@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="system"
+      data-theme="light"
       className={`${[displayFont, bodyFont, monoFont]
         .map((x) => x.variable)
         .join(" ")}`}
