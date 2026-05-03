@@ -248,13 +248,22 @@ const MapCanvas = forwardRef<MapCanvasHandle, MapCanvasProps>(
           className="absolute inset-0 h-full w-full"
           aria-hidden="true"
         >
+          {/* Outer border — all states as one combined path */}
+          <path
+            d={US_STATES.map((s) => s.path).join(" ")}
+            fill="none"
+            className="stroke-muted-foreground/60"
+            strokeWidth={2.5}
+            strokeLinejoin="round"
+          />
+          {/* Inner state borders */}
           {US_STATES.map((state) => (
             <path
               key={state.id}
               d={state.path}
               fill="none"
-              className="stroke-muted-foreground/30"
-              strokeWidth={1}
+              className="stroke-muted-foreground/20"
+              strokeWidth={0.5}
             />
           ))}
         </svg>

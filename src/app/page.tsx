@@ -11,9 +11,9 @@ import type { PaintColor } from "@/lib/paint-colors";
 type Tool = "brush" | "fill" | "eraser";
 
 export default function PlacePainterPage() {
-  const [tool, setTool] = useState<Tool>("brush");
+  const [tool, setTool] = useState<Tool>("fill");
   const [color, setColor] = useState<PaintColor>("green");
-  const [brushSize, setBrushSize] = useState(8);
+  const [brushSize, setBrushSize] = useState(24);
   const mapRef = useRef<MapCanvasHandle>(null);
 
   const handleColorChange = useCallback((c: PaintColor) => {
@@ -27,41 +27,49 @@ export default function PlacePainterPage() {
   }, []);
 
   return (
-    <div className="flex min-h-dvh flex-col items-center px-4 py-6">
-      <header className="mb-4 text-center">
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          Place Painter
-        </h1>
-        <p className="text-muted-foreground mt-1 text-sm">
-          Paint the places you&apos;d live.
-        </p>
-      </header>
-
-      <div className="w-full max-w-4xl flex-1">
-        <MapCanvas
-          ref={mapRef}
-          tool={tool}
-          color={color}
-          brushSize={brushSize}
-        />
+    <div className="flex min-h-dvh flex-col px-2 py-4 sm:px-4">
+      {/* Map — centered in remaining space */}
+      <div className="flex flex-1 items-center justify-center">
+        <div className="w-full max-w-4xl">
+          <MapCanvas
+            ref={mapRef}
+            tool={tool}
+            color={color}
+            brushSize={brushSize}
+          />
+        </div>
       </div>
 
-      <div className="sticky bottom-4 z-10 mt-4">
-        <Card className="flex items-center gap-2 px-3 py-2" material="glass">
-          <PaintToolbar
-            color={color}
-            tool={tool}
-            brushSize={brushSize}
-            onColorChange={handleColorChange}
-            onToolChange={setTool}
-            onBrushSizeChange={setBrushSize}
-            onReset={handleReset}
-          />
-          <Separator orientation="vertical" className="mx-1 h-6" />
-          <ExportButton mapRef={mapRef} />
+      {/* Bottom bar — toolbar + footer */}
+      <div className="flex flex-col items-center gap-2 pb-2">
+        <Card className="px-2 py-2 sm:px-3" material="glass">
+          <div className="flex flex-col items-center gap-2 sm:flex-row">
+            <PaintToolbar
+              color={color}
+              tool={tool}
+              brushSize={brushSize}
+              onColorChange={handleColorChange}
+              onToolChange={setTool}
+              onBrushSizeChange={setBrushSize}
+              onReset={handleReset}
+            />
+            <Separator orientation="vertical" className="mx-1 hidden h-6 sm:block" />
+            <Separator orientation="horizontal" className="w-full sm:hidden" />
+            <ExportButton mapRef={mapRef} />
+          </div>
         </Card>
+
+        <footer className="text-muted-foreground text-xs">
+          Made by{" "}
+          <a
+            href="https://x.com/slowjamsteve"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-foreground underline underline-offset-2"
+          >
+            Steven Frady
+          </a>
+        </footer>
       </div>
     </div>
   );

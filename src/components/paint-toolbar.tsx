@@ -2,7 +2,11 @@
 
 import { Button } from "earthling-ui/button";
 import { Separator } from "earthling-ui/separator";
-import { PAINT_COLORS, PAINT_COLOR_KEYS, type PaintColor } from "@/lib/paint-colors";
+import {
+  PAINT_COLORS,
+  PAINT_COLOR_KEYS,
+  type PaintColor,
+} from "@/lib/paint-colors";
 
 type Tool = "brush" | "fill" | "eraser";
 
@@ -26,16 +30,16 @@ export default function PaintToolbar({
   onReset,
 }: PaintToolbarProps) {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-2">
-      {/* Color swatches */}
+    <div className="flex flex-col items-center gap-2 sm:flex-row">
+      {/* Row 1: Color swatches */}
       <div className="flex items-center gap-1.5">
         {PAINT_COLOR_KEYS.map((key) => (
           <button
             key={key}
             onClick={() => onColorChange(key)}
-            className={`h-9 w-9 rounded-full border-2 transition-all ${
+            className={`h-8 w-8 rounded-full border-2 transition-all sm:h-9 sm:w-9 ${
               color === key && tool !== "eraser"
-                ? "scale-110 border-foreground ring-2 ring-foreground/20"
+                ? "border-foreground ring-foreground/20 scale-110 ring-2"
                 : "border-transparent hover:scale-105"
             }`}
             style={{ backgroundColor: PAINT_COLORS[key].hex }}
@@ -45,21 +49,11 @@ export default function PaintToolbar({
         ))}
       </div>
 
-      <Separator orientation="vertical" className="mx-1 h-6" />
+      <Separator orientation="vertical" className="mx-1 hidden h-6 sm:block" />
+      <Separator orientation="horizontal" className="w-full sm:hidden" />
 
-      {/* Tool buttons */}
+      {/* Row 2: Tools + brush size + reset */}
       <div className="flex items-center gap-1">
-        <Button
-          material={tool === "brush" ? "paper" : "ghost"}
-          scheme="muted"
-          shape="icon"
-          size="sm"
-          onClick={() => onToolChange("brush")}
-          aria-pressed={tool === "brush"}
-          aria-label="Brush"
-        >
-          <span className="icon-[lucide--paintbrush] text-base" />
-        </Button>
         <Button
           material={tool === "fill" ? "paper" : "ghost"}
           scheme="muted"
@@ -72,6 +66,17 @@ export default function PaintToolbar({
           <span className="icon-[lucide--paint-bucket] text-base" />
         </Button>
         <Button
+          material={tool === "brush" ? "paper" : "ghost"}
+          scheme="muted"
+          shape="icon"
+          size="sm"
+          onClick={() => onToolChange("brush")}
+          aria-pressed={tool === "brush"}
+          aria-label="Brush"
+        >
+          <span className="icon-[lucide--paintbrush] text-base" />
+        </Button>
+        <Button
           material={tool === "eraser" ? "paper" : "ghost"}
           scheme="muted"
           shape="icon"
@@ -82,13 +87,11 @@ export default function PaintToolbar({
         >
           <span className="icon-[lucide--eraser] text-base" />
         </Button>
-      </div>
 
-      {/* Brush size (only for brush/eraser) */}
-      {(tool === "brush" || tool === "eraser") && (
-        <>
-          <Separator orientation="vertical" className="mx-1 h-6" />
-          <div className="flex items-center gap-1">
+        {/* Brush size (only for brush/eraser) */}
+        {(tool === "brush" || tool === "eraser") && (
+          <>
+            <Separator orientation="vertical" className="mx-0.5 h-6" />
             <Button
               material="ghost"
               scheme="muted"
@@ -99,7 +102,7 @@ export default function PaintToolbar({
             >
               <span className="icon-[lucide--minus] text-sm" />
             </Button>
-            <span className="text-muted-foreground w-6 text-center text-xs">
+            <span className="text-muted-foreground w-5 text-center text-xs tabular-nums">
               {brushSize}
             </span>
             <Button
@@ -112,23 +115,9 @@ export default function PaintToolbar({
             >
               <span className="icon-[lucide--plus] text-sm" />
             </Button>
-          </div>
-        </>
-      )}
-
-      <Separator orientation="vertical" className="mx-1 h-6" />
-
-      {/* Reset */}
-      <Button
-        material="ghost"
-        scheme="bad"
-        shape="icon"
-        size="sm"
-        onClick={onReset}
-        aria-label="Reset map"
-      >
-        <span className="icon-[lucide--rotate-ccw] text-base" />
-      </Button>
+          </>
+        )}
+      </div>
     </div>
   );
 }

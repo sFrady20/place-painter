@@ -11,7 +11,7 @@
   "dependencies": {
     "@iconify-json/lucide": "^1.2.91",
     "@tailwindcss/postcss": "^4.2.0",
-    "earthling-ui": "^1.1.0-alpha.37",
+    "earthling-ui": "^1.1.0-alpha.38",
     "next": "16.1.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
