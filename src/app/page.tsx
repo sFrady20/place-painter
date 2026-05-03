@@ -6,14 +6,18 @@ import { Separator } from "earthling-ui/separator";
 import MapCanvas, { type MapCanvasHandle } from "@/components/map-canvas";
 import PaintToolbar from "@/components/paint-toolbar";
 import ExportButton from "@/components/export-button";
-import { PAINT_COLORS, PAINT_COLOR_KEYS, type PaintColor } from "@/lib/paint-colors";
+import {
+  PAINT_COLORS,
+  PAINT_COLOR_KEYS,
+  type PaintColor,
+} from "@/lib/paint-colors";
 
 type Tool = "brush" | "fill" | "eraser";
 
 export default function PlacePainterPage() {
   const [tool, setTool] = useState<Tool>("fill");
   const [color, setColor] = useState<PaintColor>("green");
-  const [brushSize, setBrushSize] = useState(24);
+  const [brushSize, setBrushSize] = useState(12);
   const mapRef = useRef<MapCanvasHandle>(null);
 
   const handleColorChange = useCallback((c: PaintColor) => {
@@ -68,7 +72,10 @@ export default function PlacePainterPage() {
               onBrushSizeChange={setBrushSize}
               onReset={handleReset}
             />
-            <Separator orientation="vertical" className="mx-1 hidden h-6 sm:block" />
+            <Separator
+              orientation="vertical"
+              className="mx-1 hidden h-6 sm:block"
+            />
             <Separator orientation="horizontal" className="w-full sm:hidden" />
             <ExportButton mapRef={mapRef} />
           </div>
